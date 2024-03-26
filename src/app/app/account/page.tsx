@@ -8,6 +8,16 @@ export default function AccountPage() {
         <Heading tag="h1" className="text-center capitalize">
           manage your account
         </Heading>
+
+        <ul className="flex" role="navigation">
+          <li>
+            <button>Profile</button>
+          </li>
+
+          <li>
+            <button>Settings</button>
+          </li>
+        </ul>
       </Container>
     </main>
   );

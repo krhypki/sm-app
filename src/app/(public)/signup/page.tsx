@@ -1,14 +1,18 @@
-import AuthForm from '@/components/auth/AuthForm';
-import InputWLabel from '@/components/ui/input-w-label';
+'use client';
 
-export default function LoginPage() {
+import SignupForm from '@/components/auth/signup-form';
+import Link from 'next/link';
+
+export default function SignupPage() {
   return (
-    <AuthForm actionType="signup">
-      <InputWLabel label="Email" />
-      <InputWLabel label="Password" />
-
-      <InputWLabel label="First Name" />
-      <InputWLabel label="Last Name" />
-    </AuthForm>
+    <section>
+      <SignupForm />
+      <p className="mt-3 text-center">
+        Already have an account?{' '}
+        <Link className="font-bold capitalize" href="/login">
+          Login
+        </Link>
+      </p>
+    </section>
   );
 }
