@@ -1,8 +1,9 @@
 'use client';
 
+import { useTrapFocusInsideElement } from '@/hooks/useTrapFocusInsideElement';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Heading from './heading';
 
 type ModalProps = {
@@ -18,9 +19,22 @@ export default function Modal({
   children,
   heading,
 }: ModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useTrapFocusInsideElement(dialogRef, isOpen);
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
-  }, [isOpen]);
+
+    const onEscapeKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onIsOpenChange(false);
+      }
+    };
+
+    window.addEventListener('keydown', onEscapeKeyPress);
+
+    return () => window.removeEventListener('keydown', onEscapeKeyPress);
+  }, [isOpen, onIsOpenChange]);
 
   if (!isOpen) {
     return null;
@@ -33,8 +47,9 @@ export default function Modal({
       transition={{ duration: 0.3 }}
     >
       <dialog
+        ref={dialogRef}
         open={isOpen}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-slate-100 transition-all duration-1000"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-slate-100 transition-all duration-1000 w-full max-w-sm"
       >
         <div className="pt-9 px-5 relative">
           {heading && (

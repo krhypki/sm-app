@@ -19,7 +19,7 @@ export default function Heading({
   const Tag = tag;
   const styleTag = variant ?? tag;
 
-  const headingClassName = cva(`text-semibold mb-5`, {
+  const headingClassName = cva(`font-semibold mb-5`, {
     variants: {
       styleTag: {
         h1: 'text-4xl',
