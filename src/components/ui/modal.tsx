@@ -3,7 +3,7 @@
 import { useTrapFocusInsideElement } from '@/hooks/useTrapFocusInsideElement';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Heading from './heading';
 
 type ModalProps = {
@@ -21,6 +21,15 @@ export default function Modal({
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   useTrapFocusInsideElement(dialogRef, isOpen);
+
+  const animation = useMemo(
+    () => ({
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      transition: { duration: 0.3 },
+    }),
+    [],
+  );
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -41,15 +50,12 @@ export default function Modal({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <dialog
+    <>
+      <motion.div
         ref={dialogRef}
         open={isOpen}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-slate-100 transition-all duration-1000 w-full max-w-sm"
+        {...animation}
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-slate-700 text-slate-100 transition-all duration-1000 w-full max-w-lg max-h-[calc(100vh-64px)] overflow-y-auto"
       >
         <div className="pt-9 px-5 relative">
           {heading && (
@@ -65,15 +71,16 @@ export default function Modal({
           </button>
         </div>
 
-        <div className="border-t border-slate-300 pt-5 pb-9 px-5">
+        <div className="border-t border-slate-500 pt-5 pb-9 px-5">
           {children}
         </div>
-      </dialog>
+      </motion.div>
 
-      <div
+      <motion.div
+        {...animation}
         onClick={() => onIsOpenChange(false)}
         className="fixed top-0 left-0 w-full h-full  bg-slate-900/50 duration-1000"
-      ></div>
-    </motion.div>
+      ></motion.div>
+    </>
   );
 }

@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import NextAuth, { NextAuthConfig } from 'next-auth';
 import credentials from 'next-auth/providers/credentials';
 import { findOneByEmail } from './db/user';
-import { userLoginSchema } from './utils/validation-schemas';
+import { userLoginSchema } from './validators/user-schemas';
 
 const config = {
   pages: {
@@ -41,9 +41,10 @@ const config = {
     authorized: ({ request }) => {
       return true;
     },
-    jwt: async ({ token, user, trigger }) => {
+    jwt: async ({ token, user }) => {
       if (user) {
         token.email = user.email || '';
+        token.id = user.id;
       }
 
       return token;
@@ -51,6 +52,7 @@ const config = {
     session: ({ session, token }) => {
       if (session.user) {
         session.user.email = token.email!;
+        session.user.id = token.id;
       }
 
       return session;

@@ -1,6 +1,8 @@
 'use client';
 
-import { imageSchema } from '@/lib/utils/validation-schemas';
+import { ImageUploadVariant } from '@/lib/types';
+import { cn } from '@/lib/utils/cn';
+import { imageSchema } from '@/lib/validators/user-schemas';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from '../../ui/button';
@@ -8,15 +10,18 @@ import ImageUploaderPreview from './image-uploader-preview';
 
 interface ImageUploaderProps {
   imageAlt: string;
-  initialImage: string | null;
+  initialImage?: string | null;
+  className?: string;
+  variant?: ImageUploadVariant;
 }
 
 export const ImageUploader = ({
   imageAlt,
   initialImage,
+  className,
+  variant = 'image',
 }: ImageUploaderProps) => {
-  const [draggingOver, setDraggingOver] = useState(false);
-  const [imageSrc, setImageSrc] = useState<string | null>(initialImage);
+  const [imageSrc, setImageSrc] = useState<string | null>(initialImage || '');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const dropRef = useRef(null);
 
@@ -60,14 +65,18 @@ export const ImageUploader = ({
 
   // 4
   return (
-    <div className="flex flex-col gap-y-10">
-      <ImageUploaderPreview imageSrc={imageSrc} imageAlt={imageAlt} />
+    <div
+      className={cn('flex flex-col gap-y-10 max-w-full w-[400px]', className)}
+    >
+      <ImageUploaderPreview
+        variant={variant}
+        imageSrc={imageSrc}
+        imageAlt={imageAlt ?? ''}
+      />
 
       <div
-        className="border border-dotted border-slate-900  bg-slate-200 relative cursor-pointer max-w-full w-[400px] h-[200px] flex flex-col items-center justify-center rounded-md hover:opacity-70 transition-all"
+        className="border border-dotted border-slate-900 mx-auto bg-slate-200 relative cursor-pointer w-full h-[200px] flex flex-col items-center justify-center rounded-md hover:opacity-70 transition-all"
         ref={dropRef}
-        onDragEnter={() => setDraggingOver(true)}
-        onDragLeave={() => setDraggingOver(false)}
         onDrag={preventDefaults}
         onDragStart={preventDefaults}
         onDragEnd={preventDefaults}
@@ -75,7 +84,7 @@ export const ImageUploader = ({
         onDrop={handleDrop}
       >
         <Button className="mb-4">Browse image</Button>
-        <span>or drop it here</span>
+        <span className="text-slate-900">or drop it here</span>
         <input
           type="file"
           name="file"

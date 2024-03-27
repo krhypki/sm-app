@@ -11,13 +11,27 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(cuid())
-  email       String   @unique
-  password    String
-  firstName   String
-  lastName    String
-  description String?
-  avatar      String?
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
+  id                            String   @id @default(cuid())
+  email                         String   @unique
+  password                      String
+  firstName                     String
+  lastName                      String
+  description                   String?
+  avatar                        String?
+  posts                         Post[]
+  followedUsers                 User[]   @relation("followed")
+  followedUsersRelationRelation User[]   @relation("followed")
+  updatedAt                     DateTime @updatedAt
+  createdAt                     DateTime @default(now())
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  authorId  String
+  image     String?
+  author    User     @relation(fields: [authorId], references: [id])
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }

@@ -8,7 +8,7 @@ import { uploadImage } from '@/lib/utils/upload-image';
 import {
   userSignupSchema,
   userUpdateSchenma,
-} from '@/lib/utils/validation-schemas';
+} from '@/lib/validators/user-schemas';
 import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { isRedirectError } from 'next/dist/client/components/redirect';
