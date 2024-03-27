@@ -1,7 +1,12 @@
+import AccountNav from '@/components/app/account/AccountNav';
 import Container from '@/components/ui/container';
 import Heading from '@/components/ui/heading';
 
-export default function AccountPage() {
+type AccountLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default async function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <main>
       <Container>
@@ -9,15 +14,9 @@ export default function AccountPage() {
           manage your account
         </Heading>
 
-        <ul className="flex" role="navigation">
-          <li>
-            <button>Profile</button>
-          </li>
+        <AccountNav />
 
-          <li>
-            <button>Settings</button>
-          </li>
-        </ul>
+        {children}
       </Container>
     </main>
   );

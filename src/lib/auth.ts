@@ -41,6 +41,20 @@ const config = {
     authorized: ({ request }) => {
       return true;
     },
+    jwt: async ({ token, user, trigger }) => {
+      if (user) {
+        token.email = user.email || '';
+      }
+
+      return token;
+    },
+    session: ({ session, token }) => {
+      if (session.user) {
+        session.user.email = token.email!;
+      }
+
+      return session;
+    },
   },
 } satisfies NextAuthConfig;
 

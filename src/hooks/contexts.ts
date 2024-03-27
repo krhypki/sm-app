@@ -5,7 +5,7 @@ const useContextWithErrorHandle = <T>(context: Context<T>, name: string) => {
   const contextData = useContext(context);
 
   if (!contextData) {
-    throw new Error(`${name} must be used within OffersContextProvider`);
+    throw new Error(`${name} must be used within ContextProvider`);
   }
 
   return contextData;

@@ -9,9 +9,9 @@ import AppNav from './app-nav';
 export default function AppHeader() {
   return (
     <MediaQueryContextProvider>
-      <header className=" relative text-slate-100 w-full bg-slate-800 px-6 py-3">
+      <header className="relative text-slate-100 w-full bg-slate-800 px-6 py-3">
         <Container className="flex items-center justify-between">
-          <Link href="/">
+          <Link href="/app">
             <Logo variant="light" />
           </Link>
           <AppNav />

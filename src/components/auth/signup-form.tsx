@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
-import Button from '../ui/button';
+import FormSubmitButton from '../general/form-submit-button';
 import InputWLabel from '../ui/input-w-label';
 
 type TSignupForm = z.infer<typeof userSignupSchema>;
@@ -58,7 +58,7 @@ export default function SignupForm() {
           {...register(name)}
         />
       ))}
-      <Button size="lg">Sign Up</Button>
+      <FormSubmitButton size="lg">Sign Up</FormSubmitButton>
     </form>
   );
 }

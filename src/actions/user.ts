@@ -1,10 +1,15 @@
 'use server';
 
-import { signIn } from '@/lib/auth';
+import { auth, signIn } from '@/lib/auth';
 import { INVALID_FORM_DATA_RESPONSE } from '@/lib/constants';
 import prisma from '@/lib/db/prisma';
-import { userSignupSchema } from '@/lib/utils/validation-schemas';
-import { Prisma } from '@prisma/client';
+import { findOneByEmail, updateUser } from '@/lib/db/user';
+import { uploadImage } from '@/lib/utils/upload-image';
+import {
+  userSignupSchema,
+  userUpdateSchenma,
+} from '@/lib/utils/validation-schemas';
+import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { isRedirectError } from 'next/dist/client/components/redirect';
 
@@ -63,4 +68,96 @@ export async function login(formData: unknown) {
       error: 'Invalid credentials',
     };
   }
+}
+
+export async function updateAvatar(formData: FormData) {
+  if (!(formData instanceof FormData)) {
+    return {
+      error: 'Invalid form data',
+    };
+  }
+
+  const session = await auth();
+
+  if (!session?.user) {
+    return {
+      error: 'Something went wrong, try again later.',
+    };
+  }
+
+  const image = await uploadImage(formData);
+
+  if (image.error) {
+    return {
+      error: image.error.message,
+    };
+  }
+
+  try {
+    await prisma.user.update({
+      where: {
+        email: session?.user.email,
+      },
+      data: { avatar: image.url },
+    });
+  } catch (error) {
+    return {
+      error: 'Something went wrong, try again later.',
+    };
+  }
+}
+
+export async function updateUserData(formData: unknown) {
+  if (!(formData instanceof FormData)) {
+    return INVALID_FORM_DATA_RESPONSE;
+  }
+
+  const userData = Object.fromEntries(formData.entries());
+  const validatedData = userUpdateSchenma.safeParse(userData);
+
+  if (!validatedData.success) {
+    return INVALID_FORM_DATA_RESPONSE;
+  }
+
+  const session = await auth();
+  await updateUser(session?.user.email, validatedData.data);
+}
+
+export async function updatePassword(formData: unknown) {
+  if (!(formData instanceof FormData)) {
+    return INVALID_FORM_DATA_RESPONSE;
+  }
+
+  const session = await auth();
+
+  if (!session?.user) {
+    return {
+      error: 'Something went wrong, try again later.',
+    };
+  }
+
+  const userData = Object.fromEntries(formData.entries()) as Record<
+    string,
+    User['password']
+  >;
+  const { currentPassword, newPassword } = userData;
+
+  const user = await findOneByEmail(session.user.email);
+
+  if (!user) {
+    return {
+      error: 'User not found',
+    };
+  }
+
+  const isPasswordValid = await bcrypt.compare(currentPassword, user?.password);
+
+  if (!isPasswordValid) {
+    return {
+      error: 'Incorrect password',
+    };
+  }
+
+  const newPasswordHashed = await bcrypt.hash(newPassword, 10);
+  await updateUser(session.user.email, { password: newPasswordHashed });
 }

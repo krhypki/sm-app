@@ -15,7 +15,8 @@ const links = [
     label: 'Dashboard',
   },
   {
-    href: '/app/account',
+    href: '/app/account/profile',
+    basePath: '/app/account',
     label: 'Account',
   },
 ];
@@ -33,7 +34,7 @@ export default function AppNav() {
     <AppNavLink
       key={link.href}
       {...link}
-      isActive={activePathname === link.href}
+      isActive={activePathname.includes(link.basePath || link.href)}
     />
   ));
 

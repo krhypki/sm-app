@@ -2,7 +2,7 @@
 
 import { login } from '@/actions/user';
 import { toast } from 'react-toastify';
-import Button from '../ui/button';
+import FormSubmitButton from '../general/form-submit-button';
 import InputWLabel from '../ui/input-w-label';
 
 export default function LoginForm() {
@@ -18,7 +18,7 @@ export default function LoginForm() {
     <form action={onSubmit} className="flex flex-col gap-y-5">
       <InputWLabel label="Email" />
       <InputWLabel label="Password" />
-      <Button size="lg">Sign Up</Button>
+      <FormSubmitButton size="lg">Sign Up</FormSubmitButton>
     </form>
   );
 }

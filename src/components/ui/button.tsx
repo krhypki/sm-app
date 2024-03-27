@@ -1,13 +1,8 @@
+import { ButtonProps } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
 import { cva } from 'class-variance-authority';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import Slot from '../general/slot';
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  asChild?: boolean;
-  variant?: 'default' | 'secondary';
-  size?: 'sm' | 'default' | 'lg';
-};
 
 const buttonClassName = cva(
   `inline-flex items-center justify-center rounded-full whitespace-nowrap transition-colors text-sm outline-none disabled:opacity-50 disabled:pointer-events-none`,

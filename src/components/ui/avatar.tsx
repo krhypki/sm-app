@@ -6,10 +6,11 @@ import Image, { ImageProps } from 'next/image';
 import { useState } from 'react';
 
 type AvatarProps = ImageProps & {
-  src?: string;
+  src: string | null;
   alt?: string;
   className?: string;
   isSmall?: boolean;
+  size?: 'sm' | 'md' | 'lg';
 };
 
 export default function Avatar({
@@ -17,22 +18,41 @@ export default function Avatar({
   alt,
   isSmall,
   className,
+  size = 'md',
   ...props
 }: AvatarProps) {
   const [showPlaceholder, setShowPlaceholder] = useState(false);
 
-  const size = isSmall ? 32 : 48;
+  const sizeData = {
+    className: '',
+    value: null,
+  } as { className: string; value: number | null };
+
+  switch (size) {
+    case 'sm':
+      sizeData.className = 'h-8 w-8';
+      sizeData.value = 32;
+      break;
+    case 'md':
+      sizeData.className = 'h-12 w-12';
+      sizeData.value = 48;
+      break;
+    case 'lg':
+      sizeData.className = 'h-[96px] w-[96px]';
+      sizeData.value = 96;
+      break;
+  }
 
   if (!src || showPlaceholder) {
     return (
       <div
         className={cn(
-          'flex shrink-0 items-center justify-center text-slate-100 bg-slate-600 rounded-full w-12 h-12',
-          { 'h-8 w-8': isSmall },
+          'flex shrink-0 items-center justify-center text-slate-100 bg-slate-600 rounded-full',
+          sizeData.className,
           className,
         )}
       >
-        <PersonIcon width={size - 12} height={size - 12} />
+        <PersonIcon width={sizeData.value - 12} height={sizeData.value - 12} />
       </div>
     );
   }
@@ -41,9 +61,10 @@ export default function Avatar({
     <Image
       src={src}
       alt={alt}
+      height={sizeData.value}
+      width={sizeData.value}
       {...props}
-      height={size}
-      width={size}
+      className={sizeData.className}
       onError={() => setShowPlaceholder(true)}
     />
   );
