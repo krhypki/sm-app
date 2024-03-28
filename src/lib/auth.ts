@@ -38,7 +38,22 @@ const config = {
     }),
   ],
   callbacks: {
-    authorized: ({ request }) => {
+    authorized: ({ request, auth }) => {
+      const isLoggedIn = Boolean(auth?.user);
+      const isTryingToAccessApp = request.nextUrl.pathname.includes('/app');
+
+      if (!isLoggedIn && isTryingToAccessApp) {
+        return false;
+      }
+
+      if (isLoggedIn && !isTryingToAccessApp) {
+        return Response.redirect(new URL('/app/dashboard', request.nextUrl));
+      }
+
+      if (isLoggedIn && isTryingToAccessApp) {
+        return true;
+      }
+
       return true;
     },
     jwt: async ({ token, user }) => {
