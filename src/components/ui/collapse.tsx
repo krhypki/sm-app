@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils/cn';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type CollapseProps = {
   isOpen?: boolean;
@@ -15,6 +15,11 @@ export default function Collapse({
   className,
 }: CollapseProps) {
   const collapseRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setHeight(collapseRef.current?.scrollHeight || 0);
+  }, [children]);
 
   return (
     <div
@@ -23,11 +28,7 @@ export default function Collapse({
         'h-0 overflow-hidden transition-all duration-300',
         className,
       )}
-      style={
-        isOpen
-          ? { height: collapseRef.current?.scrollHeight + 'px' }
-          : { height: '0px' }
-      }
+      style={isOpen ? { height: height + 'px' } : { height: '0px' }}
     >
       {children}
     </div>

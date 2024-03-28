@@ -15,17 +15,17 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function DashboardAddPost() {
-  const { avatar, id, firstName, lastName } = useCurrentUserContext();
+  const currentUser = useCurrentUserContext();
   const [showModal, setShwoModal] = useState(false);
 
   return (
     <ContentBlock className="flex flex-col">
       <div className="flex justify-between items-center gap-x-3">
         <p className="text-lg">
-          Logged as: <strong>{getUserFullname(firstName, lastName)}</strong>
+          Logged as: <strong>{getUserFullname(currentUser)}</strong>
         </p>
 
-        <Avatar src={avatar || ''} alt="test" />
+        <Avatar src={currentUser.avatar || ''} alt="test" />
       </div>
       <Button onClick={() => setShwoModal(true)} className="mt-auto ml-auto">
         Add new post
@@ -38,7 +38,7 @@ export default function DashboardAddPost() {
       >
         <form
           action={async (formData: FormData) => {
-            const response = await addPost(formData, id);
+            const response = await addPost(formData, currentUser.id);
 
             if (!response?.error) {
               setShwoModal(false);

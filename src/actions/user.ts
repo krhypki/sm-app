@@ -3,7 +3,8 @@
 import { auth, signIn } from '@/lib/auth';
 import { INVALID_FORM_DATA_RESPONSE } from '@/lib/constants';
 import prisma from '@/lib/db/prisma';
-import { findOneByEmail, updateUser } from '@/lib/db/user';
+import { findOneByEmail, updateFollowedUsers, updateUser } from '@/lib/db/user';
+import { RelationActionType } from '@/lib/types';
 import { uploadImage } from '@/lib/utils/upload-image';
 import {
   userSignupSchema,
@@ -11,6 +12,7 @@ import {
 } from '@/lib/validators/user-schemas';
 import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { revalidatePath } from 'next/cache';
 import { isRedirectError } from 'next/dist/client/components/redirect';
 
 export async function createUser(formData: unknown) {
@@ -121,6 +123,8 @@ export async function updateUserData(formData: unknown) {
 
   const session = await auth();
   await updateUser(session?.user.email, validatedData.data);
+
+  revalidatePath('/app/', 'layout');
 }
 
 export async function updatePassword(formData: unknown) {
@@ -160,4 +164,20 @@ export async function updatePassword(formData: unknown) {
 
   const newPasswordHashed = await bcrypt.hash(newPassword, 10);
   await updateUser(session.user.email, { password: newPasswordHashed });
+}
+
+export async function toggleFollow(
+  followedId: User['id'],
+  type: RelationActionType,
+) {
+  const session = await auth();
+
+  if (!session?.user) {
+    return {
+      error: 'Something went wrong, try again later.',
+    };
+  }
+
+  await updateFollowedUsers(session.user.email, followedId, type);
+  revalidatePath('/app/find-people');
 }

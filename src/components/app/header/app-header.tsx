@@ -11,7 +11,7 @@ export default function AppHeader() {
     <MediaQueryContextProvider>
       <header className="relative text-slate-100 w-full bg-slate-800 px-6 py-3">
         <Container className="flex items-center justify-between">
-          <Link href="/app">
+          <Link href="/app/dashboard">
             <Logo variant="light" />
           </Link>
           <AppNav />

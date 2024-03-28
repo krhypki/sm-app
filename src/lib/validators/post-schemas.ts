@@ -5,3 +5,5 @@ export const addPostSchema = z.object({
   content: z.string().min(1).max(300),
   image: z.string().optional(),
 });
+
+export const postCommentSchema = z.string().min(1).max(300);

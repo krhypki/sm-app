@@ -19,6 +19,7 @@ export default async function ProfilePage() {
           buttonText="Upload"
         >
           <ImageUploader
+            variant="avatar"
             imageAlt="User avatar preview"
             initialImage={currentUser.avatar || ''}
           />

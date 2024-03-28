@@ -1,4 +1,5 @@
 import { CurrentUserContext } from '@/contexts/current-user-context-provider';
+import { FindPeopleContext } from '@/contexts/find-ppl-context-provider';
 import { MediaQueryContext } from '@/contexts/media-query-context-provider';
 import { Context, useContext } from 'react';
 
@@ -18,4 +19,8 @@ export function useMediaQueryContext() {
 
 export function useCurrentUserContext() {
   return useContextWithErrorHandle(CurrentUserContext, 'useCurrentUserContext');
+}
+
+export function useFindPeopleContext() {
+  return useContextWithErrorHandle(FindPeopleContext, 'useFindPeopleContext');
 }

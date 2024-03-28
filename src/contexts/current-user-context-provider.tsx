@@ -1,14 +1,14 @@
 'use client';
 
-import { User } from '@prisma/client';
+import { UserWithRelations } from '@/lib/types';
 import { createContext } from 'react';
 
 type CurrentUserContextProviderProps = {
   children: React.ReactNode;
-  user: User;
+  user: UserWithRelations;
 };
 
-export const CurrentUserContext = createContext<User | null>(null);
+export const CurrentUserContext = createContext<UserWithRelations | null>(null);
 
 export default function CurrentUserContextProvider({
   children,

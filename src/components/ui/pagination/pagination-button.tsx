@@ -1,38 +1,40 @@
 import { PaginationDirection } from '@/lib/types';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 import Button from '../button';
 
 type PaginationButtonProps = {
   direction: PaginationDirection;
   page: number;
-  onClick: () => void;
+  url: string;
 };
 
 export default function PaginationButton({
   direction,
-  onClick,
   page,
+  url,
 }: PaginationButtonProps) {
   return (
     <Button
       size="sm"
       variant="secondary"
       className={`${direction === 'next' ? 'ml-auto' : ''}`}
-      onClick={onClick}
+      asChild
     >
-      {direction === 'previous' && (
-        <>
-          <ChevronLeftIcon />
-          {page}
-        </>
-      )}
-
-      {direction === 'next' && (
-        <>
-          {page}
-          <ChevronRightIcon />
-        </>
-      )}
+      <Link href={url}>
+        {direction === 'previous' && (
+          <>
+            <ChevronLeftIcon />
+            Page {page}
+          </>
+        )}
+        {direction === 'next' && (
+          <>
+            Page {page}
+            <ChevronRightIcon />
+          </>
+        )}
+      </Link>
     </Button>
   );
 }

@@ -1,27 +1,28 @@
-import UsersList from '@/components/app/users/UsersList';
+import FindPeopleFilterForm from '@/components/app/find-people/find-people-filter-form';
+import FindPeopleList from '@/components/app/find-people/find-people-list';
 import Container from '@/components/ui/container';
 import ContentBlock from '@/components/ui/content-block';
 import Heading from '@/components/ui/heading';
-import Input from '@/components/ui/input';
+import { FindPeopleContextProvider } from '@/contexts/find-ppl-context-provider';
 
-export default function FindPeoplePage() {
+export default async function FindPeoplePage() {
   return (
-    <main>
-      <Container>
-        <Heading tag="h1" className="text-center">
-          Find people
-        </Heading>
+    <FindPeopleContextProvider>
+      <main>
+        <Container>
+          <Heading tag="h1" className="text-center">
+            Find people
+          </Heading>
 
-        <section>
-          <form className="max-w-lg mx-auto mb-10">
-            <Input placeholder="Search for people" />
-          </form>
+          <section>
+            <FindPeopleFilterForm />
 
-          <ContentBlock>
-            <UsersList />
-          </ContentBlock>
-        </section>
-      </Container>
-    </main>
+            <ContentBlock>
+              <FindPeopleList />
+            </ContentBlock>
+          </section>
+        </Container>
+      </main>
+    </FindPeopleContextProvider>
   );
 }

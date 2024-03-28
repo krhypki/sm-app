@@ -1,3 +1,6 @@
-export function getUserFullname(firstName: string, lastName: string) {
-  return `${firstName} ${lastName}`;
+import { User } from '@prisma/client';
+import { UserEssentials } from '../types';
+
+export function getUserFullname(user: User | UserEssentials) {
+  return `${user.firstName} ${user.lastName}`;
 }

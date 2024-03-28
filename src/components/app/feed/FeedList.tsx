@@ -1,10 +1,15 @@
+import { PostWithRelations } from '@/lib/types';
 import FeedItem from './FeedItem';
 
-export default function FeedList() {
+type FeedListProps = {
+  posts: PostWithRelations[];
+};
+
+export default function FeedList({ posts }: FeedListProps) {
   return (
     <ul>
-      {Array.from({ length: 10 }).map((_, i) => (
-        <FeedItem key={i} />
+      {posts.map((post) => (
+        <FeedItem post={post} key={post.id} />
       ))}
     </ul>
   );
