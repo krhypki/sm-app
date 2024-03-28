@@ -2,7 +2,7 @@
 
 import { findPeople } from '@/actions/users';
 import { useDebounce } from '@/hooks/useDebounce';
-import { User } from '@prisma/client';
+import { UserEssentials } from '@/lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createContext, useEffect, useState } from 'react';
 
@@ -11,7 +11,7 @@ type FindPeopleContextProviderProps = {
 };
 
 type FindPeopleContextType = {
-  users: User[];
+  users: UserEssentials[];
   totalPages: number;
   currentPage: number;
   handleQueryUpdate: (query: string) => void;
@@ -19,7 +19,7 @@ type FindPeopleContextType = {
 
 type UserData = {
   totalPages: number;
-  users: Partial<User>[];
+  users: UserEssentials[];
 };
 
 export const FindPeopleContext = createContext<FindPeopleContextType | null>(

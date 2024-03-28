@@ -97,6 +97,7 @@ export async function getUsersPerPage(page: number, query: string) {
         id: true,
         firstName: true,
         lastName: true,
+        avatar: true,
       },
     }),
     prisma.user.count({
