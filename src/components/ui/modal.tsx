@@ -19,7 +19,7 @@ export default function Modal({
   children,
   heading,
 }: ModalProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   useTrapFocusInsideElement(dialogRef, isOpen);
 
   const animation = useMemo(
@@ -53,7 +53,6 @@ export default function Modal({
     <>
       <motion.div
         ref={dialogRef}
-        open={isOpen}
         {...animation}
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-slate-700 text-slate-100 transition-all duration-1000 w-full max-w-lg max-h-[calc(100vh-64px)] overflow-y-auto"
       >
