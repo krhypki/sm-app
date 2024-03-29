@@ -7,10 +7,12 @@ type FeedListProps = {
 
 export default function FeedList({ posts }: FeedListProps) {
   return (
-    <ul>
-      {posts.map((post) => (
-        <FeedItem post={post} key={post.id} />
-      ))}
-    </ul>
+    <>
+      <ul>
+        {posts.map((post) => (
+          <FeedItem post={post} key={post.id} />
+        ))}
+      </ul>
+    </>
   );
 }

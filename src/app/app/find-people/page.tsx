@@ -17,7 +17,7 @@ export default async function FindPeoplePage() {
           <section>
             <FindPeopleFilterForm />
 
-            <ContentBlock>
+            <ContentBlock className="min-h-[300px]">
               <FindPeopleList />
             </ContentBlock>
           </section>

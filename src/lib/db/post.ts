@@ -27,57 +27,66 @@ export async function createPostComment(postId: Post['id'], content: string) {
 
 export async function findFollowedUsersPosts(
   users: UserWithRelations,
-  amount?: 10,
+  amount = 10,
 ) {
-  let posts = await prisma.post.findMany({
-    take: amount,
-    where: {
-      authorId: {
-        in: [...users.followedUsers.map((user) => user.id)],
-      },
-    },
-    include: {
-      author: {
-        select: {
-          firstName: true,
-          lastName: true,
-          avatar: true,
-          id: true,
+  let [posts, count] = await prisma.$transaction([
+    prisma.post.findMany({
+      where: {
+        authorId: {
+          in: [...users.followedUsers.map((user) => user.id)],
         },
       },
-      likes: {
-        select: {
-          id: true,
-        },
-      },
-      comments: {
-        take: 10,
-        include: {
-          author: {
-            select: {
-              avatar: true,
-              createdAt: true,
-              id: true,
-              firstName: true,
-              lastName: true,
-            },
+      take: amount,
+      include: {
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+            avatar: true,
+            id: true,
           },
         },
-        orderBy: {
-          createdAt: 'desc',
+        likes: {
+          select: {
+            id: true,
+          },
+        },
+        comments: {
+          take: 10,
+          include: {
+            author: {
+              select: {
+                avatar: true,
+                createdAt: true,
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
+      orderBy: {
+        createdAt: 'desc',
+      },
+    }),
+    prisma.post.count({
+      where: {
+        authorId: {
+          in: [...users.followedUsers.map((user) => user.id)],
+        },
+      },
+    }),
+  ]);
 
   let postsWithMapLikes = posts.map((post) => {
     return { ...post, likes: post.likes.map((like) => like.id) };
   });
 
-  return postsWithMapLikes;
+  return [postsWithMapLikes, count] as const;
 }
 
 export async function updatePostLikes(postId: Post['id']) {
@@ -98,11 +107,18 @@ export async function updatePostLikes(postId: Post['id']) {
   const isLiked = post.likes.some((like) => like.id === user.id);
   const actionType = isLiked ? 'disconnect' : 'connect';
 
-  const res = await prisma.post.update({
+  await prisma.post.update({
     where: { id: postId },
     data: {
       likes: {
         [actionType]: [{ id: user.id }],
+      },
+    },
+    include: {
+      likes: {
+        select: {
+          id: true,
+        },
       },
     },
   });

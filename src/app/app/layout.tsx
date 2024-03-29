@@ -15,7 +15,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
       <AppHeader />
 
       <CurrentUserContextProvider user={currentUser}>
-        <div className="py-10">{children}</div>
+        <div className="py-20">{children}</div>
       </CurrentUserContextProvider>
 
       <Footer />

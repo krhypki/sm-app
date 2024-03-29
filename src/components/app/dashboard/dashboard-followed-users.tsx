@@ -34,7 +34,7 @@ export default function DashboardFollowedUsers({
         Followed users
       </Heading>
 
-      <form className="mb-4">
+      <form className="mb-8">
         <Input
           value={searchValue}
           placeholder="Search users"

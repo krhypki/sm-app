@@ -14,6 +14,7 @@ type FindPeopleContextType = {
   users: UserEssentials[];
   totalPages: number;
   currentPage: number;
+  isLoading: boolean;
   handleQueryUpdate: (query: string) => void;
 };
 
@@ -35,6 +36,7 @@ export function FindPeopleContextProvider({
     users: [],
     totalPages: 0,
   });
+  const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
@@ -42,8 +44,11 @@ export function FindPeopleContextProvider({
 
   useEffect(() => {
     const getUsersData = async () => {
+      setIsLoading(true);
       const newUsersData = await findPeople(+page, debouncedQuery);
       setUsersData(newUsersData);
+
+      setIsLoading(false);
     };
 
     getUsersData();
@@ -60,6 +65,7 @@ export function FindPeopleContextProvider({
         users: usersData.users,
         currentPage: +page,
         totalPages: usersData.totalPages,
+        isLoading,
         handleQueryUpdate,
       }}
     >

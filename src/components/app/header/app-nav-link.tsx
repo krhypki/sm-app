@@ -1,6 +1,6 @@
 import MotionBorder from '@/components/general/motion-border';
-import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
+import Link from 'next/link';
 
 type AppNavLinkProps = {
   href: string;
@@ -22,7 +22,9 @@ export function AppNavLink({
       className={cn('hover:scale-110 transition-all relative pb-2', className)}
       key={href}
     >
-      <Link href={href}>{label}</Link>
+      <Link className="p-2" href={href}>
+        {label}
+      </Link>
 
       {isActive && <MotionBorder layoutId={motionId} />}
     </li>

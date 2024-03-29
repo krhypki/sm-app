@@ -102,6 +102,8 @@ export async function updateAvatar(formData: FormData) {
       },
       data: { avatar: image.url },
     });
+
+    revalidatePath('/app/', 'layout');
   } catch (error) {
     return {
       error: 'Something went wrong, try again later.',

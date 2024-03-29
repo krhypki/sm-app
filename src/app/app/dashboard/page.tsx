@@ -1,15 +1,23 @@
 import { getFollowedUsersPosts } from '@/actions/post';
 import DashboardAddPost from '@/components/app/dashboard/dashboard-add-post';
+import DashboardFeedList from '@/components/app/dashboard/dashboard-feed-list';
 import DashboardFollowedUsers from '@/components/app/dashboard/dashboard-followed-users';
-import FeedList from '@/components/app/feed/FeedList';
 import Container from '@/components/ui/container';
-import ContentBlock from '@/components/ui/content-block';
-import Heading from '@/components/ui/heading';
+import { POSTS_PER_PAGE } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
 
-export default async function AppDashboardPage() {
+type DashboardPageProps = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function AppDashboardPage({
+  searchParams,
+}: DashboardPageProps) {
   const user = await getCurrentUser();
-  const followedPosts = await getFollowedUsersPosts();
+  const page = Number(searchParams.page) || 1;
+  const [followedPosts, totalPages] = await getFollowedUsersPosts(
+    page * POSTS_PER_PAGE,
+  );
 
   return (
     <main className="py-8">
@@ -18,17 +26,17 @@ export default async function AppDashboardPage() {
           <DashboardFollowedUsers initialUsers={user.followedUsers} />
         </section>
 
-        <section className=" col-span-3">
+        <section className="col-span-3">
           <DashboardAddPost />
         </section>
 
-        <ContentBlock className="col-span-3">
-          <Heading className="text-center mb-10" tag="h2">
-            Recent posts from people you follow
-          </Heading>
-
-          <FeedList posts={followedPosts} />
-        </ContentBlock>
+        <section className="col-span-3">
+          <DashboardFeedList
+            currentPage={page}
+            posts={followedPosts}
+            totalPages={totalPages}
+          />
+        </section>
       </Container>
     </main>
   );

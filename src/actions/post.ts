@@ -1,6 +1,6 @@
 'use server';
 
-import { INVALID_FORM_DATA_RESPONSE } from '@/lib/constants';
+import { INVALID_FORM_DATA_RESPONSE, POSTS_PER_PAGE } from '@/lib/constants';
 import {
   createPostComment,
   findFollowedUsersPosts,
@@ -56,12 +56,14 @@ export async function addPost(formData: unknown, userId: User['id']) {
   });
 }
 
-export async function getFollowedUsersPosts() {
+export async function getFollowedUsersPosts(count = POSTS_PER_PAGE) {
   const user = await getCurrentUser();
 
   try {
-    const posts = await findFollowedUsersPosts(user);
-    return posts;
+    const [posts, postsCount] = await findFollowedUsersPosts(user, count);
+    const totalPages = Math.ceil(postsCount / POSTS_PER_PAGE);
+
+    return [posts, totalPages] as const;
   } catch (error) {
     console.log(error);
     return [];
@@ -94,5 +96,5 @@ export async function addNewComment(postId: Post['id'], formData: unknown) {
 export async function togglePostLike(postId: Post['id']) {
   await updatePostLikes(postId);
 
-  revalidatePath('/app/dashboard');
+  revalidatePath('/app/dashboard', 'page');
 }
