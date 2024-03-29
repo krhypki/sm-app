@@ -1,37 +1,29 @@
-'use client';
-
-import { useCurrentUserContext } from '@/hooks/contexts';
-import { UserEssentials } from '@/lib/types';
-import { useCallback } from 'react';
+import EmptyListText from '@/components/general/empty-list-text';
+import { UserEssentials, UserWithRelations } from '@/lib/types';
+import { isFollowingUser } from '@/lib/utils/is-following-user';
 import UsersListItem from './UsersListItem';
 
 type UsersListProps = {
   users: UserEssentials[];
+  currentUser: UserWithRelations;
 };
 
-export default function UsersList({ users }: UsersListProps) {
-  const currentUser = useCurrentUserContext();
-
-  const isFollowing = useCallback(
-    (user: UserEssentials) => {
-      return Boolean(
-        currentUser.followedUsers?.find(
-          (followedUser) => followedUser.id === user.id,
-        ),
-      );
-    },
-    [currentUser.followedUsers],
-  );
-
+export default function UsersList({ users, currentUser }: UsersListProps) {
   return (
-    <ul>
-      {users.map((user) => (
-        <UsersListItem
-          isFollowing={isFollowing(user)}
-          key={user.id}
-          user={user}
-        />
-      ))}
-    </ul>
+    <>
+      {!users.length && <EmptyListText>No followers yet</EmptyListText>}
+      {!!users.length && (
+        <ul>
+          {users.map((user) => (
+            <UsersListItem
+              showFollowBtn={currentUser.id !== user.id}
+              isFollowing={isFollowingUser(currentUser, user.id)}
+              key={user.id}
+              user={user}
+            />
+          ))}
+        </ul>
+      )}
+    </>
   );
 }

@@ -1,10 +1,18 @@
 'use server';
 
-import { auth, signIn } from '@/lib/auth';
+import { auth, signIn, signOut } from '@/lib/auth';
 import { INVALID_FORM_DATA_RESPONSE } from '@/lib/constants';
+import { findPosts } from '@/lib/db/post';
 import prisma from '@/lib/db/prisma';
-import { findOneByEmail, updateFollowedUsers, updateUser } from '@/lib/db/user';
+import {
+  findFollowers,
+  findOneByEmail,
+  findOneById,
+  updateFollowedUsers,
+  updateUser,
+} from '@/lib/db/user';
 import { RelationActionType } from '@/lib/types';
+import { getUserFromSession } from '@/lib/utils/get-user-from-session';
 import { uploadImage } from '@/lib/utils/upload-image';
 import {
   userSignupSchema,
@@ -14,6 +22,7 @@ import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { revalidatePath } from 'next/cache';
 import { isRedirectError } from 'next/dist/client/components/redirect';
+import { redirect } from 'next/navigation';
 
 export async function createUser(formData: unknown) {
   const validatedUser = userSignupSchema.safeParse(formData);
@@ -72,6 +81,10 @@ export async function login(formData: unknown) {
   }
 }
 
+export async function logout() {
+  await signOut({ redirectTo: '/' });
+}
+
 export async function updateAvatar(formData: FormData) {
   if (!(formData instanceof FormData)) {
     return {
@@ -123,8 +136,8 @@ export async function updateUserData(formData: unknown) {
     return INVALID_FORM_DATA_RESPONSE;
   }
 
-  const session = await auth();
-  await updateUser(session?.user.email, validatedData.data);
+  const sessionUser = await getUserFromSession();
+  await updateUser(sessionUser.email, validatedData.data);
 
   revalidatePath('/app/', 'layout');
 }
@@ -134,9 +147,9 @@ export async function updatePassword(formData: unknown) {
     return INVALID_FORM_DATA_RESPONSE;
   }
 
-  const session = await auth();
+  const sessionUser = await getUserFromSession();
 
-  if (!session?.user) {
+  if (!sessionUser) {
     return {
       error: 'Something went wrong, try again later.',
     };
@@ -148,7 +161,7 @@ export async function updatePassword(formData: unknown) {
   >;
   const { currentPassword, newPassword } = userData;
 
-  const user = await findOneByEmail(session.user.email);
+  const user = await findOneByEmail(sessionUser.email);
 
   if (!user) {
     return {
@@ -165,7 +178,7 @@ export async function updatePassword(formData: unknown) {
   }
 
   const newPasswordHashed = await bcrypt.hash(newPassword, 10);
-  await updateUser(session.user.email, { password: newPasswordHashed });
+  await updateUser(sessionUser.email, { password: newPasswordHashed });
 }
 
 export async function toggleFollow(
@@ -182,4 +195,20 @@ export async function toggleFollow(
 
   await updateFollowedUsers(session.user.email, followedId, type);
   revalidatePath('/app/find-people');
+}
+
+export async function getUserProfile(id: User['id']) {
+  if (!id) {
+    redirect('/app/find-people');
+  }
+
+  try {
+    const user = await findOneById(id);
+    const [posts] = await findPosts(id);
+    const followers = await findFollowers(id);
+
+    return [user, posts, followers] as const;
+  } catch (error) {
+    redirect('/app/find-people');
+  }
 }

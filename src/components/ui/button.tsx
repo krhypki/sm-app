@@ -10,7 +10,7 @@ const buttonClassName = cva(
     variants: {
       variant: {
         default: 'bg-slate-900 text-slate-100 hover-focus:bg-slate-900/80',
-        secondary: 'bg-slate-200 text-slate-900 hover-focus:bg-slate-200/80',
+        secondary: 'bg-slate-300 text-slate-900 hover-focus:bg-slate-400/80',
       },
       size: {
         sm: 'h-7 px-4 py-1',

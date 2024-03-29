@@ -1,7 +1,7 @@
 'use server';
 
 import { Prisma, User } from '@prisma/client';
-import { USERS_PER_PAGE } from '../constants';
+import { POSTS_PER_PAGE, USERS_PER_PAGE } from '../constants';
 import { RelationActionType } from '../types';
 import { getUserFromSession } from '../utils/get-user-from-session';
 import prisma from './prisma';
@@ -136,6 +136,35 @@ export async function findOneById(id: User['id']) {
   return user;
 }
 
+export async function findOneByIdWithPosts(id: User['id']) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      posts: {
+        take: POSTS_PER_PAGE,
+        include: {
+          author: true,
+          likes: {
+            select: {
+              id: true,
+            },
+          },
+          comments: {
+            include: {
+              author: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const currentUser = await getCurrentUser();
+  return user;
+}
+
 export async function updateFollowedUsers(
   email: User['email'],
   followedId: User['email'],
@@ -153,4 +182,24 @@ export async function updateFollowedUsers(
       },
     },
   });
+}
+
+export async function findFollowers(id: User['id']) {
+  const followers = await prisma.user.findMany({
+    where: {
+      followedUsers: {
+        some: {
+          id,
+        },
+      },
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      avatar: true,
+    },
+  });
+
+  return followers;
 }

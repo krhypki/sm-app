@@ -1,29 +1,22 @@
-import ContentBlock from '@/components/ui/content-block';
-import Heading from '@/components/ui/heading';
-import { PostWithRelations } from '@/lib/types';
+import { getFollowedUsersPosts } from '@/actions/post';
+import { POSTS_PER_PAGE } from '@/lib/constants';
 import FeedList from '../feed/FeedList';
 import FeedListControls from '../feed/feed-list-controls';
 
 type DashboardFeedListProps = {
-  posts: PostWithRelations[];
-  totalPages: number;
   currentPage: number;
 };
 
-export default function DashboardFeedList({
-  posts,
-  totalPages,
+export default async function DashboardFeedList({
   currentPage,
 }: DashboardFeedListProps) {
+  const [followedPosts, totalPages] = await getFollowedUsersPosts(
+    currentPage * POSTS_PER_PAGE,
+  );
+
   return (
     <div>
-      <ContentBlock>
-        <Heading className="text-center mb-10" tag="h2">
-          Recent posts from people you follow
-        </Heading>
-
-        <FeedList posts={posts} />
-      </ContentBlock>
+      <FeedList posts={followedPosts} />
 
       <FeedListControls
         baseUrl="/app/dashboard"

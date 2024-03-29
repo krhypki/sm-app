@@ -4,10 +4,12 @@ import Container from '@/components/ui/container';
 import ContentBlock from '@/components/ui/content-block';
 import Heading from '@/components/ui/heading';
 import { FindPeopleContextProvider } from '@/contexts/find-ppl-context-provider';
+import { getCurrentUser } from '@/lib/db/user';
 
 export default async function FindPeoplePage() {
+  const currentUser = await getCurrentUser();
   return (
-    <FindPeopleContextProvider>
+    <FindPeopleContextProvider currentUser={currentUser}>
       <main>
         <Container>
           <Heading tag="h1" className="text-center">

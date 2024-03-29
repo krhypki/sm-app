@@ -7,7 +7,10 @@ export default function FindPeopleFilterForm() {
   const { handleQueryUpdate } = useFindPeopleContext();
 
   return (
-    <form className="max-w-md mx-auto mb-10">
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="max-w-md mx-auto mb-10"
+    >
       <Input
         type="search"
         onChange={(e) => {

@@ -59,7 +59,9 @@ const config = {
     jwt: async ({ token, user }) => {
       if (user) {
         token.email = user.email || '';
-        token.id = user.id;
+        token.id = user.id!;
+        token.firstname = user.firstName;
+        token.lastName = user.lastName;
       }
 
       return token;
@@ -68,6 +70,8 @@ const config = {
       if (session.user) {
         session.user.email = token.email!;
         session.user.id = token.id;
+        session.user.firstName = token.firstName;
+        session.user.lastName = token.lastName;
       }
 
       return session;
@@ -75,4 +79,4 @@ const config = {
   },
 } satisfies NextAuthConfig;
 
-export const { auth, signIn } = NextAuth(config);
+export const { auth, signIn, signOut } = NextAuth(config);

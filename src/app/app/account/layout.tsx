@@ -1,12 +1,14 @@
 import AccountNav from '@/components/app/account/AccountNav';
 import Container from '@/components/ui/container';
 import Heading from '@/components/ui/heading';
+import { Suspense } from 'react';
+import Loading from '../loading';
 
 type AccountLayoutProps = {
   children: React.ReactNode;
 };
 
-export default async function AccountLayout({ children }: AccountLayoutProps) {
+export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <main>
       <Container>
@@ -16,7 +18,7 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
 
         <AccountNav />
 
-        {children}
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </Container>
     </main>
   );

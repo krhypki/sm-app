@@ -4,20 +4,20 @@ import { addNewComment } from '@/actions/post';
 import Avatar from '@/components/ui/avatar';
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/input';
-import { useCurrentUserContext } from '@/hooks/contexts';
 import { PostWithRelations } from '@/lib/types';
 import { formatDate } from '@/lib/utils/format-date';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { User } from '@prisma/client';
 import { useRef, useState } from 'react';
 import FeedItemLikes from './FeedItemLikes';
 import PostCommentList from './PostCommentList';
 
 type FeedItemProps = {
   post: PostWithRelations;
+  currentUserId: User['id'];
 };
 
-export default function FeedItem({ post }: FeedItemProps) {
-  const currentUser = useCurrentUserContext();
+export default function FeedItem({ post, currentUserId }: FeedItemProps) {
   const [showComments, setShowcomments] = useState(false);
   const [isFormInvalid, setIsFormInvalid] = useState(false);
   const addCommentForm = useRef<HTMLFormElement | null>(null);
@@ -73,7 +73,7 @@ export default function FeedItem({ post }: FeedItemProps) {
               <FeedItemLikes
                 postId={post.id}
                 totalLikes={post.likes?.length || 0}
-                isLiked={post.likes?.includes(currentUser.id) || false}
+                isLiked={post.likes?.includes(currentUserId) || false}
               />
 
               {!!post.comments.length && (

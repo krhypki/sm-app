@@ -2,12 +2,13 @@
 
 import { findPeople } from '@/actions/users';
 import { useDebounce } from '@/hooks/useDebounce';
-import { UserEssentials } from '@/lib/types';
+import { UserEssentials, UserWithRelations } from '@/lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createContext, useEffect, useState } from 'react';
 
 type FindPeopleContextProviderProps = {
   children: React.ReactNode;
+  currentUser: UserWithRelations;
 };
 
 type FindPeopleContextType = {
@@ -15,6 +16,7 @@ type FindPeopleContextType = {
   totalPages: number;
   currentPage: number;
   isLoading: boolean;
+  currentUser: UserWithRelations;
   handleQueryUpdate: (query: string) => void;
 };
 
@@ -29,6 +31,7 @@ export const FindPeopleContext = createContext<FindPeopleContextType | null>(
 
 export function FindPeopleContextProvider({
   children,
+  currentUser,
 }: FindPeopleContextProviderProps) {
   const params = useSearchParams();
   const router = useRouter();
@@ -55,7 +58,7 @@ export function FindPeopleContextProvider({
   }, [page, debouncedQuery]);
 
   const handleQueryUpdate = async (query: string) => {
-    setQuery(query);
+    setQuery(query.toLocaleLowerCase());
     router.replace('/app/find-people');
   };
 
@@ -65,6 +68,7 @@ export function FindPeopleContextProvider({
         users: usersData.users,
         currentPage: +page,
         totalPages: usersData.totalPages,
+        currentUser,
         isLoading,
         handleQueryUpdate,
       }}

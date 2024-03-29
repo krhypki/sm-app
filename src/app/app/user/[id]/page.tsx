@@ -1,9 +1,13 @@
+import { getUserProfile } from '@/actions/user';
+import FeedList from '@/components/app/feed/FeedList';
+import FollowToggler from '@/components/app/users/follow-toggler';
 import Avatar from '@/components/ui/avatar';
 import Container from '@/components/ui/container';
 import ContentBlock from '@/components/ui/content-block';
 import Heading from '@/components/ui/heading';
-import { findOneById } from '@/lib/db/user';
+import { getCurrentUser } from '@/lib/db/user';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { isFollowingUser } from '@/lib/utils/is-following-user';
 import { redirect } from 'next/navigation';
 
 type UserPageProps = {
@@ -13,7 +17,9 @@ type UserPageProps = {
 };
 
 export default async function UserPage({ params }: UserPageProps) {
-  const user = await findOneById(params.id);
+  const [user, posts, followers] = await getUserProfile(params.id);
+  const currentUser = await getCurrentUser();
+  const isFollowing = isFollowingUser(currentUser, user?.id);
 
   if (!user) {
     redirect('/404');
@@ -23,12 +29,19 @@ export default async function UserPage({ params }: UserPageProps) {
 
   return (
     <main>
-      <Container>
-        <section className="flex flex-col items-center mb-10">
-          <Heading tag="h1" className="capitalize">
-            {fullName} profile
-          </Heading>
-          <Avatar src={user.avatar || ''} alt={fullName} />
+      <Container className="relative">
+        <section className="flex justify-center mb-10">
+          <div className="flex flex-col items-center gap-y-6">
+            <FollowToggler
+              className="ml-0"
+              user={user.id}
+              isFollowing={isFollowing}
+            />
+            <Heading tag="h1" className="capitalize mb-0">
+              {fullName} profile
+            </Heading>
+            <Avatar src={user.avatar || ''} alt={fullName} />
+          </div>
         </section>
 
         <div className="grid grid-cols-3 grid-rows-[200px_1fr] gap-8">
@@ -42,16 +55,12 @@ export default async function UserPage({ params }: UserPageProps) {
 
           <ContentBlock>
             <Heading tag="h2">Followers</Heading>
-            {/* <UsersList /> */}
+            {/* <UsersList users={followers} /> */}
           </ContentBlock>
 
           <ContentBlock className="col-start-2 col-span-2 row-start-1 row-span-2">
-            <Heading tag="h2">Posts</Heading>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              voluptas, voluptates, nemo, quidem quae dolorum autem quos
-              molestias doloremque magni quibusdam.
-            </p>
+            <Heading tag="h2">Recent posts</Heading>
+            <FeedList posts={posts} />
           </ContentBlock>
         </div>
       </Container>

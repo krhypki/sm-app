@@ -9,13 +9,16 @@ import ContentBlock from '@/components/ui/content-block';
 import Input from '@/components/ui/input';
 import Modal from '@/components/ui/modal';
 import Textarea from '@/components/ui/textarea';
-import { useCurrentUserContext } from '@/hooks/contexts';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { User } from '@prisma/client';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-export default function DashboardAddPost() {
-  const currentUser = useCurrentUserContext();
+type AddPostProps = {
+  currentUser: User;
+};
+
+export default function AddPost({ currentUser }: AddPostProps) {
   const [showModal, setShwoModal] = useState(false);
 
   return (

@@ -1,5 +1,4 @@
 import { Post } from '@prisma/client';
-import { UserWithRelations } from '../types';
 import prisma from './prisma';
 import { getCurrentUser } from './user';
 
@@ -25,16 +24,14 @@ export async function createPostComment(postId: Post['id'], content: string) {
   return comments;
 }
 
-export async function findFollowedUsersPosts(
-  users: UserWithRelations,
+export async function findPosts(
+  authorId: string | { in: string[] },
   amount = 10,
 ) {
   let [posts, count] = await prisma.$transaction([
     prisma.post.findMany({
       where: {
-        authorId: {
-          in: [...users.followedUsers.map((user) => user.id)],
-        },
+        authorId,
       },
       take: amount,
       include: {
@@ -75,9 +72,7 @@ export async function findFollowedUsersPosts(
     }),
     prisma.post.count({
       where: {
-        authorId: {
-          in: [...users.followedUsers.map((user) => user.id)],
-        },
+        authorId: authorId,
       },
     }),
   ]);

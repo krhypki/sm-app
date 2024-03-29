@@ -1,11 +1,7 @@
 'use server';
 
 import { INVALID_FORM_DATA_RESPONSE, POSTS_PER_PAGE } from '@/lib/constants';
-import {
-  createPostComment,
-  findFollowedUsersPosts,
-  updatePostLikes,
-} from '@/lib/db/post';
+import { createPostComment, findPosts, updatePostLikes } from '@/lib/db/post';
 import prisma from '@/lib/db/prisma';
 import { getCurrentUser } from '@/lib/db/user';
 import { uploadImage } from '@/lib/utils/upload-image';
@@ -60,7 +56,10 @@ export async function getFollowedUsersPosts(count = POSTS_PER_PAGE) {
   const user = await getCurrentUser();
 
   try {
-    const [posts, postsCount] = await findFollowedUsersPosts(user, count);
+    const followedUsersIds = {
+      in: [...user.followedUsers.map((followedUsers) => followedUsers.id)],
+    };
+    const [posts, postsCount] = await findPosts(followedUsersIds, count);
     const totalPages = Math.ceil(postsCount / POSTS_PER_PAGE);
 
     return [posts, totalPages] as const;
@@ -94,7 +93,7 @@ export async function addNewComment(postId: Post['id'], formData: unknown) {
 }
 
 export async function togglePostLike(postId: Post['id']) {
-  await updatePostLikes(postId);
+  const res = await updatePostLikes(postId);
 
-  revalidatePath('/app/dashboard', 'page');
+  revalidatePath('/app', 'layout');
 }
