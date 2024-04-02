@@ -1,5 +1,6 @@
 export const APP_NAME = 'Social Media App';
 export const INVALID_FORM_DATA_RESPONSE = { error: 'Invalid form data' };
+export const GITHUB_REPO_URL = 'https://github.com/krhypki/sm-app';
 
 export const USERS_PER_PAGE = 6;
 export const POSTS_PER_PAGE = 10;
