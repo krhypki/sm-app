@@ -29,6 +29,7 @@ export default function HomePage() {
         src={introImage}
         alt={`${APP_NAME} application preview`}
         priority
+        className="max-w-[800px]"
       />
     </>
   );
