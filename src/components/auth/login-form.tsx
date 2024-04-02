@@ -19,7 +19,7 @@ export default function LoginForm() {
     <form action={onSubmit} className="flex flex-col gap-y-5">
       <InputWLabel label="Email" name="email" />
       <PasswordInputPreview label="Password" name="password" />
-      <FormSubmitButton size="lg">Sign Up</FormSubmitButton>
+      <FormSubmitButton size="lg">Login</FormSubmitButton>
     </form>
   );
 }
