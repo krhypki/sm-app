@@ -5,7 +5,7 @@ import { UserWithRelations } from '@/lib/types';
 import { formatInputValue } from '@/lib/utils/format-input-value';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { useMemo, useState } from 'react';
-import UsersList from '../users/UsersList';
+import UsersList from '../users/users-list';
 
 type FollowedUsersProps = {
   currentUser: UserWithRelations;

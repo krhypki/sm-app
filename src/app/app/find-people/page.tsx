@@ -1,5 +1,5 @@
-import FindPeopleFilterForm from '@/components/app/find-people/find-people-filter-form';
-import FindPeopleList from '@/components/app/find-people/find-people-list';
+import FindPeopleFilterForm from '@/components/find-people/find-people-filter-form';
+import FindPeopleList from '@/components/find-people/find-people-list';
 import Container from '@/components/ui/container';
 import ContentBlock from '@/components/ui/content-block';
 import Heading from '@/components/ui/heading';

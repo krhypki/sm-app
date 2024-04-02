@@ -1,7 +1,7 @@
 import EmptyListText from '@/components/general/empty-list-text';
 import { PostWithRelations } from '@/lib/types';
 import { getUserFromSession } from '@/lib/utils/get-user-from-session';
-import FeedItem from './FeedItem';
+import FeedItem from './feed-item';
 
 type FeedListProps = {
   posts: PostWithRelations[];

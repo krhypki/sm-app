@@ -1,7 +1,8 @@
 import { updatePassword, updateUserData } from '@/actions/user';
-import AccountForm from '@/components/app/account/account-form';
+import AccountForm from '@/components/account/account-form';
 import Container from '@/components/ui/container';
 import InputWLabel from '@/components/ui/input-w-label';
+import PasswordInputPreview from '@/components/ui/password-input-preview';
 import { APP_NAME } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
 import { Metadata } from 'next';
@@ -40,12 +41,11 @@ export default async function SettingsPage() {
           heading="Update password"
           successMsg="Password has been updated."
         >
-          <InputWLabel
-            type="password"
+          <PasswordInputPreview
             label="Current password"
             name="currentPassword"
           />
-          <InputWLabel
+          <PasswordInputPreview
             label="New password"
             name="newPassword"
             type="password"

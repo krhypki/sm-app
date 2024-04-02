@@ -10,8 +10,8 @@ import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { User } from '@prisma/client';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import FeedItemLikes from './FeedItemLikes';
-import PostCommentList from './PostCommentList';
+import FeedItemLikes from './feed-item-likes';
+import PostCommentList from './post-comment-list';
 
 type FeedItemProps = {
   post: PostWithRelations;

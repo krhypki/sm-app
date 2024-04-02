@@ -4,6 +4,7 @@ import { login } from '@/actions/user';
 import { toast } from 'react-toastify';
 import FormSubmitButton from '../general/form-submit-button';
 import InputWLabel from '../ui/input-w-label';
+import PasswordInputPreview from '../ui/password-input-preview';
 
 export default function LoginForm() {
   const onSubmit = async (formData: FormData) => {
@@ -17,7 +18,7 @@ export default function LoginForm() {
   return (
     <form action={onSubmit} className="flex flex-col gap-y-5">
       <InputWLabel label="Email" name="email" />
-      <InputWLabel label="Password" name="password" type="password" />
+      <PasswordInputPreview label="Password" name="password" />
       <FormSubmitButton size="lg">Sign Up</FormSubmitButton>
     </form>
   );

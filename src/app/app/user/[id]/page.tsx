@@ -1,11 +1,11 @@
 import { getUserProfile } from '@/actions/user';
-import FeedList from '@/components/app/feed/FeedList';
-import UsersList from '@/components/app/users/UsersList';
-import FollowToggler from '@/components/app/users/follow-toggler';
+import FeedList from '@/components/feed/feed-list';
 import Avatar from '@/components/ui/avatar';
 import Container from '@/components/ui/container';
 import ContentBlock from '@/components/ui/content-block';
 import Heading from '@/components/ui/heading';
+import FollowToggler from '@/components/users/follow-toggler';
+import UsersList from '@/components/users/users-list';
 import { getCurrentUser } from '@/lib/db/user';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { isFollowingUser } from '@/lib/utils/is-following-user';
@@ -31,6 +31,7 @@ export default async function UserPage({ params }: UserPageProps) {
   const [user, posts, followers] = await getUserProfile(params.id);
   const currentUser = await getCurrentUser();
   const isFollowing = isFollowingUser(currentUser, user?.id);
+  const isCurrentUserProfile = currentUser.id === user?.id;
 
   if (!user) {
     redirect('/404');
@@ -43,11 +44,14 @@ export default async function UserPage({ params }: UserPageProps) {
       <Container className="relative">
         <section className="flex justify-center mb-10">
           <div className="flex flex-col items-center gap-y-6">
-            <FollowToggler
-              className="mx-auto"
-              user={user.id}
-              isFollowing={isFollowing}
-            />
+            {!isCurrentUserProfile && (
+              <FollowToggler
+                className="mx-auto"
+                user={user.id}
+                isFollowing={isFollowing}
+              />
+            )}
+
             <Heading tag="h1" className="capitalize mb-0">
               {fullName} profile
             </Heading>
@@ -60,7 +64,7 @@ export default async function UserPage({ params }: UserPageProps) {
             <Heading tag="h2">About</Heading>
             <p>
               {user.description ||
-                `${fullName} don't want to say anything about themselves.`}
+                `${fullName} doesn't want to say anything about themselves.`}
             </p>
           </ContentBlock>
 

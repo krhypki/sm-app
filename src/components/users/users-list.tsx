@@ -1,7 +1,7 @@
 import EmptyListText from '@/components/general/empty-list-text';
 import { UserEssentials, UserWithRelations } from '@/lib/types';
 import { isFollowingUser } from '@/lib/utils/is-following-user';
-import UsersListItem from './UsersListItem';
+import UsersListItem from './users-list-item';
 
 type UsersListProps = {
   users: UserEssentials[];

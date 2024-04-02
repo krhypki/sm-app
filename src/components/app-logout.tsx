@@ -1,8 +1,8 @@
 'use client';
 
 import { logout } from '@/actions/user';
-import Button from '../ui/button';
-import Container from '../ui/container';
+import Button from './ui/button';
+import Container from './ui/container';
 
 export default function AppLogout() {
   return (

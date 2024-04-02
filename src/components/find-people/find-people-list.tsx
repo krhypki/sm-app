@@ -2,7 +2,7 @@
 
 import Spinner from '@/components/ui/spinner';
 import { useFindPeopleContext } from '@/hooks/contexts';
-import UsersList from '../users/UsersList';
+import UsersList from '../users/users-list';
 import FindPeoplePagination from './find-people-pagination';
 
 export default function FindPeopleList() {

@@ -1,4 +1,4 @@
-import AccountNav from '@/components/app/account/AccountNav';
+import AccountNav from '@/components/account/account-nav';
 import Container from '@/components/ui/container';
 import Heading from '@/components/ui/heading';
 import { Suspense } from 'react';

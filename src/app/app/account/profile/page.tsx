@@ -1,5 +1,5 @@
 import { updateAvatar, updateUserData } from '@/actions/user';
-import AccountForm from '@/components/app/account/account-form';
+import AccountForm from '@/components/account/account-form';
 import { ImageUploader } from '@/components/general/image-uploader/image-uploader';
 import Container from '@/components/ui/container';
 import Textarea from '@/components/ui/textarea';

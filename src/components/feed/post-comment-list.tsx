@@ -1,6 +1,6 @@
 import Collapse from '@/components/ui/collapse';
 import { CommentWithRelations } from '@/lib/types';
-import PostCommentItem from './PostCommentItem';
+import PostCommentItem from './post-comment-item';
 
 type PostCommentListProps = {
   isOpen: boolean;

@@ -3,7 +3,7 @@
 import Container from '@/components/ui/container';
 import { MediaQueryContextProvider } from '@/contexts/media-query-context-provider';
 import Link from 'next/link';
-import Logo from '../../general/logo';
+import Logo from '../general/logo';
 import AppNav from './app-nav';
 
 export default function AppHeader() {

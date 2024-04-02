@@ -1,6 +1,6 @@
 import { getFollowedUsersPosts } from '@/actions/post';
 import { POSTS_PER_PAGE } from '@/lib/constants';
-import FeedList from '../feed/FeedList';
+import FeedList from '../feed/feed-list';
 import FeedListControls from '../feed/feed-list-controls';
 
 type DashboardFeedListProps = {
