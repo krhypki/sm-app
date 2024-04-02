@@ -10,6 +10,7 @@ import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { User } from '@prisma/client';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
+import Heading from '../ui/heading';
 import FeedItemLikes from './feed-item-likes';
 import PostCommentList from './post-comment-list';
 
@@ -48,7 +49,7 @@ export default function FeedItem({ post, currentUserId }: FeedItemProps) {
         <div className="flex flex-col flex-1">
           <div className=" mb-10">
             <div className="flex items-center justify-between">
-              <p className="text-base font-bold mb-4">
+              <p className="text-base font-bold mb-8">
                 {getUserFullname(post.author)}
               </p>
               <time className="text-xs text-right">
@@ -56,6 +57,9 @@ export default function FeedItem({ post, currentUserId }: FeedItemProps) {
               </time>
             </div>
 
+            <Heading tag="h4" variant="h6">
+              {post.title}
+            </Heading>
             <p className="mb-6">{post.content}</p>
 
             {post.image && (

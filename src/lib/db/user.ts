@@ -6,6 +6,12 @@ import { RelationActionType } from '../types';
 import { getUserFromSession } from '../utils/get-user-from-session';
 import prisma from './prisma';
 
+export async function createUser(data: Prisma.UserCreateInput) {
+  await prisma.user.create({
+    data,
+  });
+}
+
 export async function findOneByEmail(email: User['email']) {
   if (!email) {
     return null;
@@ -24,7 +30,10 @@ export async function findOneByEmail(email: User['email']) {
   return user;
 }
 
-export async function updateUser(email: User['email'], data: Partial<User>) {
+export async function updateUser(
+  email: User['email'],
+  data: Prisma.UserUpdateInput,
+) {
   try {
     await prisma.user.update({
       where: {

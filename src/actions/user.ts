@@ -3,7 +3,6 @@
 import { auth, signIn, signOut } from '@/lib/auth';
 import { INVALID_FORM_DATA_RESPONSE } from '@/lib/constants';
 import { findPosts } from '@/lib/db/post';
-import prisma from '@/lib/db/prisma';
 import {
   findFollowers,
   findOneByEmail,
@@ -35,12 +34,7 @@ export async function createUser(formData: unknown) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    await prisma.user.create({
-      data: {
-        ...validatedUser.data,
-        password: hashedPassword,
-      },
-    });
+    await createUser({ ...validatedUser.data, password: hashedPassword });
 
     await signIn('credentials', {
       password,
@@ -109,12 +103,7 @@ export async function updateAvatar(formData: FormData) {
   }
 
   try {
-    await prisma.user.update({
-      where: {
-        email: session?.user.email,
-      },
-      data: { avatar: image.url },
-    });
+    await updateUser(session.user.email, { avatar: image.url });
 
     revalidatePath('/app/', 'layout');
   } catch (error) {

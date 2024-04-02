@@ -1,8 +1,12 @@
 'use server';
 
 import { INVALID_FORM_DATA_RESPONSE, POSTS_PER_PAGE } from '@/lib/constants';
-import { createPostComment, findPosts, updatePostLikes } from '@/lib/db/post';
-import prisma from '@/lib/db/prisma';
+import {
+  createPost,
+  createPostComment,
+  findPosts,
+  updatePostLikes,
+} from '@/lib/db/post';
 import { getCurrentUser } from '@/lib/db/user';
 import { uploadImage } from '@/lib/utils/upload-image';
 import {
@@ -40,16 +44,14 @@ export async function addPost(formData: unknown, userId: User['id']) {
     return INVALID_FORM_DATA_RESPONSE;
   }
 
-  await prisma.post.create({
-    data: {
-      ...validatedPostData.data,
-      author: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
-  });
+  try {
+    await createPost(validatedPostData.data, userId);
+  } catch (error) {
+    console.log(error);
+    return {
+      error: 'Something went wrong. Please try again.',
+    };
+  }
 }
 
 export async function getFollowedUsersPosts(count = POSTS_PER_PAGE) {

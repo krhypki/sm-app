@@ -1,6 +1,22 @@
-import { Post } from '@prisma/client';
+import { Post, Prisma, User } from '@prisma/client';
 import prisma from './prisma';
 import { getCurrentUser } from './user';
+
+export async function createPost(
+  postData: Omit<Prisma.PostCreateInput, 'author'>,
+  userId: User['id'],
+) {
+  await prisma.post.create({
+    data: {
+      ...postData,
+      author: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+}
 
 export async function createPostComment(postId: Post['id'], content: string) {
   const user = await getCurrentUser();
