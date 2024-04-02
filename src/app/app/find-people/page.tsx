@@ -4,7 +4,13 @@ import Container from '@/components/ui/container';
 import ContentBlock from '@/components/ui/content-block';
 import Heading from '@/components/ui/heading';
 import { FindPeopleContextProvider } from '@/contexts/find-ppl-context-provider';
+import { APP_NAME } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `${APP_NAME} - find people`,
+};
 
 export default async function FindPeoplePage() {
   const currentUser = await getCurrentUser();

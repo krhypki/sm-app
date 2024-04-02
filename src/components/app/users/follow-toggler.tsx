@@ -28,7 +28,7 @@ export default function FollowToggler({
 
   return (
     <Button
-      className={cn('ml-auto', className)}
+      className={cn('md:ml-auto', className)}
       onClick={handleToggleFollow}
       variant={`${isFollowing ? 'secondary' : 'default'}`}
     >

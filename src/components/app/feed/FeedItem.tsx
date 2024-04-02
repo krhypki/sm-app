@@ -8,6 +8,7 @@ import { PostWithRelations } from '@/lib/types';
 import { formatDate } from '@/lib/utils/format-date';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { User } from '@prisma/client';
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import FeedItemLikes from './FeedItemLikes';
 import PostCommentList from './PostCommentList';
@@ -41,7 +42,7 @@ export default function FeedItem({ post, currentUserId }: FeedItemProps) {
 
   return (
     <li className="border-b border-slate-300 last-of-type:border-none py-6 flex flex-col">
-      <div className="flex gap-x-5">
+      <div className="flex flex-col md:flex-row gap-x-5 gap-y-3">
         <Avatar src={post.author.avatar || ''} alt="test" />
 
         <div className="flex flex-col flex-1">
@@ -50,13 +51,24 @@ export default function FeedItem({ post, currentUserId }: FeedItemProps) {
               <p className="text-base font-bold mb-4">
                 {getUserFullname(post.author)}
               </p>
-              <time className="text-xs">{formatDate(post.createdAt)}</time>
+              <time className="text-xs text-right">
+                {formatDate(post.createdAt)}
+              </time>
             </div>
 
-            <p>{post.content}</p>
+            <p className="mb-6">{post.content}</p>
+
+            {post.image && (
+              <Image
+                width={300}
+                height={200}
+                src={post.image}
+                alt={`${post.title} post image`}
+              />
+            )}
           </div>
 
-          <div className="flex items-center justify-between gap-3 pt-4 border-t border-slate-200">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-x-3 gap-y-5 pt-4 border-t border-slate-200">
             <form
               ref={addCommentForm}
               className="flex items-center gap-3"
@@ -69,7 +81,7 @@ export default function FeedItem({ post, currentUserId }: FeedItemProps) {
               />
               <Button type="submit">Add</Button>
             </form>
-            <div className="flex items-center gap-3">
+            <div className="flex w-full sm:w-auto justify-end items-center gap-3">
               <FeedItemLikes
                 postId={post.id}
                 totalLikes={post.likes?.length || 0}

@@ -1,5 +1,6 @@
 import { getUserProfile } from '@/actions/user';
 import FeedList from '@/components/app/feed/FeedList';
+import UsersList from '@/components/app/users/UsersList';
 import FollowToggler from '@/components/app/users/follow-toggler';
 import Avatar from '@/components/ui/avatar';
 import Container from '@/components/ui/container';
@@ -8,6 +9,7 @@ import Heading from '@/components/ui/heading';
 import { getCurrentUser } from '@/lib/db/user';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { isFollowingUser } from '@/lib/utils/is-following-user';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 type UserPageProps = {
@@ -15,6 +17,15 @@ type UserPageProps = {
     id: string;
   };
 };
+export async function generateMetadata({
+  params,
+}: UserPageProps): Promise<Metadata> {
+  const [user] = await getUserProfile(params.id);
+
+  return {
+    title: `${user ? getUserFullname(user) : ''} profile`,
+  };
+}
 
 export default async function UserPage({ params }: UserPageProps) {
   const [user, posts, followers] = await getUserProfile(params.id);
@@ -33,7 +44,7 @@ export default async function UserPage({ params }: UserPageProps) {
         <section className="flex justify-center mb-10">
           <div className="flex flex-col items-center gap-y-6">
             <FollowToggler
-              className="ml-0"
+              className="mx-auto"
               user={user.id}
               isFollowing={isFollowing}
             />
@@ -44,8 +55,8 @@ export default async function UserPage({ params }: UserPageProps) {
           </div>
         </section>
 
-        <div className="grid grid-cols-3 grid-rows-[200px_1fr] gap-8">
-          <ContentBlock>
+        <div className="grid lg:grid-cols-3 grid-rows-[200px_1fr] gap-8">
+          <ContentBlock className="max-lg:text-center">
             <Heading tag="h2">About</Heading>
             <p>
               {user.description ||
@@ -54,12 +65,16 @@ export default async function UserPage({ params }: UserPageProps) {
           </ContentBlock>
 
           <ContentBlock>
-            <Heading tag="h2">Followers</Heading>
-            {/* <UsersList users={followers} /> */}
+            <Heading tag="h2" className="max-lg:text-center">
+              Followers
+            </Heading>
+            <UsersList users={followers} currentUser={currentUser} />
           </ContentBlock>
 
-          <ContentBlock className="col-start-2 col-span-2 row-start-1 row-span-2">
-            <Heading tag="h2">Recent posts</Heading>
+          <ContentBlock className="lg:col-start-2 lg:col-span-2 lg:row-start-1 row-span-2">
+            <Heading tag="h2" className="max-lg:text-center">
+              Recent posts
+            </Heading>
             <FeedList posts={posts} />
           </ContentBlock>
         </div>

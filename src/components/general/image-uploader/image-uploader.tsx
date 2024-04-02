@@ -66,7 +66,10 @@ export const ImageUploader = ({
   // 4
   return (
     <div
-      className={cn('flex flex-col gap-y-10 max-w-full w-[400px]', className)}
+      className={cn(
+        'flex flex-col gap-y-10 max-w-full w-[400px] px-4',
+        className,
+      )}
     >
       <ImageUploaderPreview
         variant={variant}

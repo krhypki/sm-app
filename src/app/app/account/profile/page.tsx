@@ -3,7 +3,13 @@ import AccountForm from '@/components/app/account/account-form';
 import { ImageUploader } from '@/components/general/image-uploader/image-uploader';
 import Container from '@/components/ui/container';
 import Textarea from '@/components/ui/textarea';
+import { APP_NAME } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `${APP_NAME} - profile`,
+};
 
 export default async function ProfilePage() {
   const currentUser = await getCurrentUser();

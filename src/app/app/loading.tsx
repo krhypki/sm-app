@@ -1,4 +1,4 @@
-const delays = ['', 'delay-300', 'delay-700'];
+const delays = ['', 'delay-150', 'delay-300'];
 
 export default function Loading() {
   return (
@@ -6,7 +6,7 @@ export default function Loading() {
       {delays.map((delay) => (
         <span
           key={delay}
-          className={`block w-[50px] h-[50px] rounded-full bg-slate-800 animate-pulse ${delay}`}
+          className={`block w-[40px] h-[40px] rounded-full bg-slate-800 animate-pulse ${delay}`}
         ></span>
       ))}
     </div>

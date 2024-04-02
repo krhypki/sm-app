@@ -34,7 +34,7 @@ export default function AccountForm({
       </Heading>
       <form
         ref={formRef}
-        className="flex-1 flex gap-y-6 flex-col items-center"
+        className="flex-1 w-full flex gap-y-6 flex-col items-center"
         action={async (formData: FormData) => {
           const result = await formAction(formData);
 

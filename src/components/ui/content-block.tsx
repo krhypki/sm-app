@@ -12,7 +12,7 @@ export default function ContentBlock({
   return (
     <div
       className={cn(
-        'bg-slate-100 rounded-md shadow-sm h-full w-full overflow-hidden p-8',
+        'bg-slate-100 rounded-md shadow-sm h-full w-full overflow-hidden px-4 py-8 lg:p-8',
         className,
       )}
     >

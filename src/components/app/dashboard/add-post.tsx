@@ -5,7 +5,6 @@ import FormSubmitButton from '@/components/general/form-submit-button';
 import { ImageUploader } from '@/components/general/image-uploader/image-uploader';
 import Avatar from '@/components/ui/avatar';
 import Button from '@/components/ui/button';
-import ContentBlock from '@/components/ui/content-block';
 import Input from '@/components/ui/input';
 import Modal from '@/components/ui/modal';
 import Textarea from '@/components/ui/textarea';
@@ -22,9 +21,9 @@ export default function AddPost({ currentUser }: AddPostProps) {
   const [showModal, setShwoModal] = useState(false);
 
   return (
-    <ContentBlock className="flex flex-col">
+    <>
       <div className="flex justify-between items-center gap-x-3">
-        <p className="text-lg">
+        <p className="md:text-lg">
           Logged as: <strong>{getUserFullname(currentUser)}</strong>
         </p>
 
@@ -65,6 +64,6 @@ export default function AddPost({ currentUser }: AddPostProps) {
           </FormSubmitButton>
         </form>
       </Modal>
-    </ContentBlock>
+    </>
   );
 }
