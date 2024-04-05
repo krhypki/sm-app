@@ -1,4 +1,4 @@
-import { createUser } from '@/actions/user';
+import { signup } from '@/actions/user';
 import { userSignupSchema } from '@/lib/validators/user-schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -37,7 +37,7 @@ export default function SignupForm() {
     }
 
     const formData = getValues();
-    const response = await createUser(formData);
+    const response = await signup(formData);
 
     if (response?.error) {
       toast.error(response.error);

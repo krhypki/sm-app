@@ -4,6 +4,7 @@ import { auth, signIn, signOut } from '@/lib/auth';
 import { INVALID_FORM_DATA_RESPONSE } from '@/lib/constants';
 import { findPosts } from '@/lib/db/post';
 import {
+  createUser,
   findFollowers,
   findOneByEmail,
   findOneById,
@@ -23,7 +24,7 @@ import { revalidatePath } from 'next/cache';
 import { isRedirectError } from 'next/dist/client/components/redirect';
 import { redirect } from 'next/navigation';
 
-export async function createUser(formData: unknown) {
+export async function signup(formData: unknown) {
   const validatedUser = userSignupSchema.safeParse(formData);
 
   if (!validatedUser.success) {
