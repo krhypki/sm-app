@@ -1,4 +1,4 @@
-import Logo from '@/components/general/Logo';
+import Logo from '@/components/find-people/Logo';
 import Container from '@/components/ui/Container';
 import Link from 'next/link';
 

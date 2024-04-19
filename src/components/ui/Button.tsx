@@ -2,7 +2,7 @@ import { ButtonProps } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
 import { cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
-import Slot from '../general/Slot';
+import Slot from '../find-people/Slot';
 
 const buttonClassName = cva(
   `inline-flex items-center justify-center rounded-full whitespace-nowrap transition-colors text-sm outline-none disabled:opacity-50 disabled:pointer-events-none`,
