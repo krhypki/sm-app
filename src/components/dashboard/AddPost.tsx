@@ -10,8 +10,8 @@ import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { User } from '@prisma/client';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Input from '../ui/Input';
 import Modal from '../ui/Modal';
-import Input from '../ui/input';
 
 type AddPostProps = {
   currentUser: User;

@@ -10,7 +10,7 @@ import { User } from '@prisma/client';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import Heading from '../ui/Heading';
-import Input from '../ui/input';
+import Input from '../ui/Input';
 import FeedItemLikes from './FeedItemLikes';
 import PostCommentList from './PostCommentList';
 
