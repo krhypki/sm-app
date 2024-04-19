@@ -5,13 +5,13 @@ import FormSubmitButton from '@/components/general/FormSubmitButton';
 import { ImageUploader } from '@/components/general/image-uploader/ImageUploader';
 import Avatar from '@/components/ui/Avatar';
 import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
 import Textarea from '@/components/ui/Textarea';
-import Input from '@/components/ui/input';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { User } from '@prisma/client';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Modal from '../ui/Modal';
+import Input from '../ui/input';
 
 type AddPostProps = {
   currentUser: User;

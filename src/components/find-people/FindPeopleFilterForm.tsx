@@ -1,7 +1,7 @@
 'use client';
 
-import Input from '@/components/ui/input';
 import { useFindPeopleContext } from '@/hooks/contexts';
+import Input from '../ui/input';
 
 export default function FindPeopleFilterForm() {
   const { handleQueryUpdate } = useFindPeopleContext();

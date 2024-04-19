@@ -1,10 +1,10 @@
 'use client';
 
-import Input from '@/components/ui/input';
 import { UserWithRelations } from '@/lib/types';
 import { formatInputValue } from '@/lib/utils/format-input-value';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { useMemo, useState } from 'react';
+import Input from '../ui/input';
 import UsersList from '../users/UsersList';
 
 type FollowedUsersProps = {

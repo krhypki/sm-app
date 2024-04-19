@@ -3,7 +3,6 @@
 import { addNewComment } from '@/actions/post';
 import Avatar from '@/components/ui/Avatar';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/input';
 import { PostWithRelations } from '@/lib/types';
 import { formatDate } from '@/lib/utils/format-date';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
@@ -11,6 +10,7 @@ import { User } from '@prisma/client';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import Heading from '../ui/Heading';
+import Input from '../ui/input';
 import FeedItemLikes from './FeedItemLikes';
 import PostCommentList from './PostCommentList';
 
