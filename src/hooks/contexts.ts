@@ -1,6 +1,6 @@
-import { CurrentUserContext } from '@/contexts/current-user-context-provider';
-import { FindPeopleContext } from '@/contexts/find-ppl-context-provider';
-import { MediaQueryContext } from '@/contexts/media-query-context-provider';
+import { CurrentUserContext } from '@/contexts/CurrenUserContextProvider';
+import { FindPeopleContext } from '@/contexts/FIndPplContextProvider';
+import { MediaQueryContext } from '@/contexts/MediaQueryContextProvider';
 import { Context, useContext } from 'react';
 
 const useContextWithErrorHandle = <T>(context: Context<T>, name: string) => {

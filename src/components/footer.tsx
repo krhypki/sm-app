@@ -1,7 +1,7 @@
 import { APP_NAME, GITHUB_REPO_URL } from '@/lib/constants';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import Container from './ui/container';
+import Container from './ui/Container';
 
 export function Footer() {
   return (

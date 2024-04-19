@@ -1,6 +1,6 @@
-import AccountNav from '@/components/account/account-nav';
-import Container from '@/components/ui/container';
-import Heading from '@/components/ui/heading';
+import AccountNav from '@/components/account/AccountNav';
+import Container from '@/components/ui/Container';
+import Heading from '@/components/ui/Heading';
 import { Suspense } from 'react';
 import Loading from '../loading';
 

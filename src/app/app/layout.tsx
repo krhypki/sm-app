@@ -1,6 +1,6 @@
-import AppLogout from '@/components/app-logout';
+import AppLogout from '@/components/AppLogout';
 import { Footer } from '@/components/footer';
-import AppHeader from '@/components/header/app-header';
+import AppHeader from '@/components/header/AppHeader';
 
 type AppLayoutProps = {
   children: React.ReactNode;

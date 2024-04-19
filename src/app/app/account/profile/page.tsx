@@ -1,8 +1,8 @@
 import { updateAvatar, updateUserData } from '@/actions/user';
-import AccountForm from '@/components/account/account-form';
-import { ImageUploader } from '@/components/general/image-uploader/image-uploader';
-import Container from '@/components/ui/container';
-import Textarea from '@/components/ui/textarea';
+import AccountForm from '@/components/account/AccountForm';
+import { ImageUploader } from '@/components/general/image-uploader/ImageUploader';
+import Container from '@/components/ui/Container';
+import Textarea from '@/components/ui/Textarea';
 import { APP_NAME } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
 import { Metadata } from 'next';

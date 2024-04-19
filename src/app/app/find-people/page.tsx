@@ -1,9 +1,9 @@
-import FindPeopleFilterForm from '@/components/find-people/find-people-filter-form';
-import FindPeopleList from '@/components/find-people/find-people-list';
-import Container from '@/components/ui/container';
-import ContentBlock from '@/components/ui/content-block';
-import Heading from '@/components/ui/heading';
-import { FindPeopleContextProvider } from '@/contexts/find-ppl-context-provider';
+import FindPeopleFilterForm from '@/components/find-people/FindPeopleFilterForm';
+import FindPeopleList from '@/components/find-people/FindPeopleList';
+import Container from '@/components/ui/Container';
+import ContentBlock from '@/components/ui/ContentBlock';
+import Heading from '@/components/ui/Heading';
+import { FindPeopleContextProvider } from '@/contexts/FIndPplContextProvider';
 import { APP_NAME } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
 import { Metadata } from 'next';

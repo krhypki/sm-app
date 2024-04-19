@@ -1,8 +1,8 @@
 'use client';
 
 import introImage from '@/../public/images/intro.png';
-import Button from '@/components/ui/button';
-import Heading from '@/components/ui/heading';
+import Button from '@/components/ui/Button';
+import Heading from '@/components/ui/Heading';
 import { APP_NAME } from '@/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';

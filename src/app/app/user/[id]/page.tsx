@@ -1,11 +1,11 @@
 import { getUserProfile } from '@/actions/user';
-import FeedList from '@/components/feed/feed-list';
-import Avatar from '@/components/ui/avatar';
-import Container from '@/components/ui/container';
-import ContentBlock from '@/components/ui/content-block';
-import Heading from '@/components/ui/heading';
-import FollowToggler from '@/components/users/follow-toggler';
-import UsersList from '@/components/users/users-list';
+import FeedList from '@/components/feed/FeedList';
+import Avatar from '@/components/ui/Avatar';
+import Container from '@/components/ui/Container';
+import ContentBlock from '@/components/ui/ContentBlock';
+import Heading from '@/components/ui/Heading';
+import FollowToggler from '@/components/users/FollowToggler';
+import UsersList from '@/components/users/UsersList';
 import { getCurrentUser } from '@/lib/db/user';
 import { getUserFullname } from '@/lib/utils/get-user-fullname';
 import { isFollowingUser } from '@/lib/utils/is-following-user';

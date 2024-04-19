@@ -5,16 +5,83 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "sqlite"
-//   url      = env("DATABASE_URL")
-// }
-
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
+model EcommerceUser {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  city        String?
+  zip         String?
+  street      String?
+  houseNumber Int?
+  phone       String?
+  reviews     Review[]
+  orders      Order[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String
+  imageUrl    String
+  brands      String[]
+  products    Product[]
+}
+
+model Product {
+  id           String         @id @default(cuid())
+  name         String
+  description  String
+  price        Float
+  discount     Int?
+  imageUrl     String
+  rating       Float
+  brand        String
+  reviews      Review[]
+  stock        Int
+  category     Category       @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  paymentId    String         @unique()
+  OrderProduct OrderProduct[]
+}
+
+model Review {
+  id        String        @id @default(cuid())
+  product   Product       @relation(fields: [productId], references: [id])
+  productId String
+  rating    Float
+  content   String
+  author    EcommerceUser @relation(fields: [authorId], references: [id])
+  authorId  String
+  date      DateTime      @default(now())
+}
+
+model OrderProduct {
+  id        String  @id @default(cuid())
+  quantity  Int
+  product   Product @relation(fields: [productId], references: [paymentId])
+  productId String
+  Order     Order?  @relation(fields: [orderId], references: [id])
+  orderId   String?
+}
+
+model Order {
+  id             String         @id @default(cuid())
+  user           EcommerceUser? @relation(fields: [userId], references: [id])
+  userId         String?
+  notSignedEmail String
+  products       OrderProduct[]
+  date           DateTime       @default(now())
+}
+
+// SM APP
 
 model User {
   id                    String        @id @default(cuid())

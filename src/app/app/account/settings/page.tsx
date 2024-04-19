@@ -1,8 +1,8 @@
 import { updatePassword, updateUserData } from '@/actions/user';
-import AccountForm from '@/components/account/account-form';
-import Container from '@/components/ui/container';
-import InputWLabel from '@/components/ui/input-w-label';
-import PasswordInputPreview from '@/components/ui/password-input-preview';
+import AccountForm from '@/components/account/AccountForm';
+import Container from '@/components/ui/Container';
+import InputWLabel from '@/components/ui/InputWLabel';
+import PasswordInputPreview from '@/components/ui/PasswordInputPreview';
 import { APP_NAME } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/db/user';
 import { Metadata } from 'next';
