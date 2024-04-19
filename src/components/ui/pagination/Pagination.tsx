@@ -1,6 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import PaginationButton from './pagination/PaginationButton';
+import PaginationButton from './PaginationButton';
 
 type PaginationProps = {
   currentPage: number;

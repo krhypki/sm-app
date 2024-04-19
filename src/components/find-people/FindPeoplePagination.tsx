@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button';
-import Pagination from '@/components/ui/Pagination';
+import Pagination from '@/components/ui/pagination/Pagination';
 import { useFindPeopleContext } from '@/hooks/contexts';
 import Link from 'next/link';
 
