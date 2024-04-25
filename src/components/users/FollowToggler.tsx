@@ -5,7 +5,8 @@ import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
 import { User } from '@prisma/client';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
-import { MouseEvent } from 'react';
+import { MouseEvent, useOptimistic } from 'react';
+import { toast } from 'react-toastify';
 
 type FollowTogglerProps = {
   isFollowing: Boolean;
@@ -18,28 +19,38 @@ export default function FollowToggler({
   isFollowing,
   className,
 }: FollowTogglerProps) {
-  const handleToggleFollow = (event: MouseEvent<HTMLButtonElement>) => {
+  const [optimisticIsFollowing, setOptimisticIsFollowing] =
+    useOptimistic(isFollowing);
+
+  const handleToggleFollow = async (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     event.preventDefault();
     event.currentTarget.blur();
 
-    toggleFollow(user, isFollowing ? 'disconnect' : 'connect');
+    setOptimisticIsFollowing((prev) => !prev);
+    const response = await toggleFollow(
+      user,
+      isFollowing ? 'disconnect' : 'connect',
+    );
+    if (response?.error) {
+      toast.error(response.error);
+    }
   };
 
   return (
     <Button
       className={cn('md:ml-auto', className)}
       onClick={handleToggleFollow}
-      variant={`${isFollowing ? 'secondary' : 'default'}`}
+      variant={`${optimisticIsFollowing ? 'secondary' : 'default'}`}
     >
-      {isFollowing && (
+      {optimisticIsFollowing && (
         <>
           Unfollow
           <HeartIcon className="ml-2" />
         </>
       )}
 
-      {!isFollowing && (
+      {!optimisticIsFollowing && (
         <>
           Follow
           <HeartFilledIcon className="ml-2" />

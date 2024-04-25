@@ -2,6 +2,7 @@ import { togglePostLike } from '@/actions/post';
 import { Post } from '@prisma/client';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useOptimistic } from 'react';
+import { toast } from 'react-toastify';
 
 type FeedItemLikesProps = {
   postId: Post['id'];
@@ -29,7 +30,11 @@ export default function FeedItemLikes({
               ? optimisticTotalLikes - 1
               : optimisticTotalLikes + 1,
           );
-          await togglePostLike(postId);
+          const response = await togglePostLike(postId);
+
+          if (response?.error) {
+            toast.error(response.error);
+          }
         }}
       >
         {optimisticLiked ? (

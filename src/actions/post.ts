@@ -95,6 +95,13 @@ export async function addNewComment(postId: Post['id'], formData: unknown) {
 }
 
 export async function togglePostLike(postId: Post['id']) {
-  await updatePostLikes(postId);
+  try {
+    await updatePostLikes(postId);
+  } catch (error) {
+    return {
+      error: 'Something went wrong with liking the post. Please try again.',
+    };
+  }
+
   revalidatePath('/app', 'layout');
 }
