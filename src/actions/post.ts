@@ -95,7 +95,6 @@ export async function addNewComment(postId: Post['id'], formData: unknown) {
 }
 
 export async function togglePostLike(postId: Post['id']) {
-  const res = await updatePostLikes(postId);
-
+  await updatePostLikes(postId);
   revalidatePath('/app', 'layout');
 }

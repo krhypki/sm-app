@@ -1,6 +1,7 @@
 import { togglePostLike } from '@/actions/post';
 import { Post } from '@prisma/client';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
+import { useOptimistic } from 'react';
 
 type FeedItemLikesProps = {
   postId: Post['id'];
@@ -13,16 +14,30 @@ export default function FeedItemLikes({
   isLiked,
   totalLikes,
 }: FeedItemLikesProps) {
+  const [optimisticLiked, setOptimisticLiked] = useOptimistic(isLiked);
+  const [optimisticTotalLikes, setOptimisticTotalLikes] =
+    useOptimistic(totalLikes);
+
   return (
     <>
       <button
         className="flex gap-x-1 items-center"
         onClick={async () => {
+          setOptimisticLiked((prev) => !prev);
+          setOptimisticTotalLikes(() =>
+            optimisticLiked
+              ? optimisticTotalLikes - 1
+              : optimisticTotalLikes + 1,
+          );
           await togglePostLike(postId);
         }}
       >
-        {isLiked ? <HeartFilledIcon className="text-accent" /> : <HeartIcon />}
-        <span>{totalLikes}</span>
+        {optimisticLiked ? (
+          <HeartFilledIcon className="text-accent" />
+        ) : (
+          <HeartIcon />
+        )}
+        <span>{optimisticTotalLikes}</span>
       </button>
     </>
   );
