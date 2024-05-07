@@ -1,5 +1,5 @@
 import AppLogout from '@/components/AppLogout';
-import { Footer } from '@/components/footer';
+import { Footer } from '@/components/Footer';
 import AppHeader from '@/components/header/AppHeader';
 
 type AppLayoutProps = {
