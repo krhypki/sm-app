@@ -1,6 +1,6 @@
 import Avatar from '@/components/ui/Avatar';
 import { UserEssentials } from '@/lib/types';
-import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { getUserFullname } from '@/lib/utils/getUserFullname';
 import Link from 'next/link';
 import FollowToggler from './FollowToggler';
 

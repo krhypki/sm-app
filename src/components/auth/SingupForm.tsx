@@ -1,5 +1,5 @@
 import { signup } from '@/actions/user';
-import { userSignupSchema } from '@/lib/validators/user-schemas';
+import { userSignupSchema } from '@/lib/validators/userSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';

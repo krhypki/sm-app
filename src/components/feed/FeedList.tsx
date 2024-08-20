@@ -1,6 +1,6 @@
 import EmptyListText from '@/components/general/EmptyListText';
 import { PostWithRelations } from '@/lib/types';
-import { getUserFromSession } from '@/lib/utils/get-user-from-session';
+import { getUserFromSession } from '@/lib/utils/getUserFromSession';
 import FeedItem from './FeedItem';
 
 type FeedListProps = {

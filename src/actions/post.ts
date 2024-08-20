@@ -8,12 +8,9 @@ import {
   updatePostLikes,
 } from '@/lib/db/post';
 import { getCurrentUser } from '@/lib/db/user';
-import { uploadImage } from '@/lib/utils/upload-image';
-import {
-  addPostSchema,
-  postCommentSchema,
-} from '@/lib/validators/post-schemas';
-import { imageSchema } from '@/lib/validators/user-schemas';
+import { uploadImage } from '@/lib/utils/uploadImage';
+import { addPostSchema, postCommentSchema } from '@/lib/validators/postSchemas';
+import { imageSchema } from '@/lib/validators/userSchemas';
 import { Post, User } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 

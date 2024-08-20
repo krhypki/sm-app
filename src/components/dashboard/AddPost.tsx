@@ -6,7 +6,7 @@ import { ImageUploader } from '@/components/general/image-uploader/ImageUploader
 import Avatar from '@/components/ui/Avatar';
 import Button from '@/components/ui/Button';
 import Textarea from '@/components/ui/Textarea';
-import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { getUserFullname } from '@/lib/utils/getUserFullname';
 import { User } from '@prisma/client';
 import { useState } from 'react';
 import { toast } from 'react-toastify';

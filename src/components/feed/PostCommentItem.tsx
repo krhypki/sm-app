@@ -1,7 +1,7 @@
 import Avatar from '@/components/ui/Avatar';
 import { CommentWithRelations } from '@/lib/types';
-import { formatDate } from '@/lib/utils/format-date';
-import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { formatDate } from '@/lib/utils/formatDate';
+import { getUserFullname } from '@/lib/utils/getUserFullname';
 
 type PostCommentItemProps = {
   comment: CommentWithRelations;

@@ -12,12 +12,12 @@ import {
   updateUser,
 } from '@/lib/db/user';
 import { RelationActionType } from '@/lib/types';
-import { getUserFromSession } from '@/lib/utils/get-user-from-session';
-import { uploadImage } from '@/lib/utils/upload-image';
+import { getUserFromSession } from '@/lib/utils/getUserFromSession';
+import { uploadImage } from '@/lib/utils/uploadImage';
 import {
   userSignupSchema,
   userUpdateSchenma,
-} from '@/lib/validators/user-schemas';
+} from '@/lib/validators/userSchemas';
 import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { revalidatePath } from 'next/cache';

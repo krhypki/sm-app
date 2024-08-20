@@ -7,8 +7,8 @@ import Heading from '@/components/ui/Heading';
 import FollowToggler from '@/components/users/FollowToggler';
 import UsersList from '@/components/users/UsersList';
 import { getCurrentUser } from '@/lib/db/user';
-import { getUserFullname } from '@/lib/utils/get-user-fullname';
-import { isFollowingUser } from '@/lib/utils/is-following-user';
+import { getUserFullname } from '@/lib/utils/getUserFullname';
+import { isFollowingUser } from '@/lib/utils/isFollowingUser';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { UserWithRelations } from '@/lib/types';
-import { formatInputValue } from '@/lib/utils/format-input-value';
-import { getUserFullname } from '@/lib/utils/get-user-fullname';
+import { formatInputValue } from '@/lib/utils/formatInputValue';
+import { getUserFullname } from '@/lib/utils/getUserFullname';
 import { useMemo, useState } from 'react';
 import Input from '../ui/Input';
 import UsersList from '../users/UsersList';

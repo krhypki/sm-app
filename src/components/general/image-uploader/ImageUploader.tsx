@@ -2,7 +2,7 @@
 
 import { ImageUploadVariant } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
-import { imageSchema } from '@/lib/validators/user-schemas';
+import { imageSchema } from '@/lib/validators/userSchemas';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from '../../ui/Button';

@@ -3,7 +3,7 @@
 import { Prisma, User } from '@prisma/client';
 import { POSTS_PER_PAGE, USERS_PER_PAGE } from '../constants';
 import { RelationActionType } from '../types';
-import { getUserFromSession } from '../utils/get-user-from-session';
+import { getUserFromSession } from '../utils/getUserFromSession';
 import prisma from './prisma';
 
 export async function createUser(data: Prisma.UserCreateInput) {

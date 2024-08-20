@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import NextAuth, { NextAuthConfig } from 'next-auth';
 import credentials from 'next-auth/providers/credentials';
 import { findOneByEmail } from './db/user';
-import { userLoginSchema } from './validators/user-schemas';
+import { userLoginSchema } from './validators/userSchemas';
 
 const config = {
   pages: {
